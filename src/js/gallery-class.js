@@ -6,15 +6,22 @@ export class Gallery{
         this.rootRef = document.querySelector(".gallery");
     }
     createGallery(){
-        let galeryList = "";
-        this.galleryItems.map((item) => {
+         this.galleryItems.map((item) => {
           const { preview, original, description } = item;
-          galeryList =
-            galeryList +
-            `<div class="gallery__item"><a class="gallery__link" href="${original}"> <img class="gallery__image"
-            src="${preview}" data-source="${original}" alt="${description}" /> </a> </div>`;
-        }); 
-        this.rootRef.insertAdjacentHTML("afterbegin", galeryList);  
+            const imgElem=document.createElement("img");
+            imgElem.src=preview;
+            imgElem.alt=description;
+            imgElem.classList.add("gallery__image")
+            imgElem.setAttribute("data-source", original)
+            const aElem=document.createElement("a");
+            aElem.href=original;
+            aElem.classList.add("gallery__link")
+            aElem.append(imgElem);
+            const divElem=document.createElement("div");
+            divElem.append(aElem)
+            divElem.classList.add("gallery__item")
+            this.rootRef.append(divElem)
+        });    
     }
     galerySimplebox(){
         const gallery = new SimpleLightbox('.gallery a',
